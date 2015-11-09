@@ -1,0 +1,10 @@
+<enemies>
+	<enemy name="fixed_0" type="fixed" pos="0.0 2.0 3.0" yaw="0.0" pitch="0.0" roll="0.0" life="3"/>
+	<enemy name="fixed_1" type="fixed" pos="0.0 2.0 3.0" yaw="0.0" pitch="0.0" roll="0.0" life="3"/>
+	<enemy name="fixed_2" type="fixed" pos="0.0 2.0 3.0" yaw="0.0" pitch="0.0" roll="0.0" life="3"/>
+	<enemy name="patrol_0" type="patrol" pos="0.0 2.0 3.0" yaw="0.0" pitch="0.0" roll="0.0" life="4" path="path_0"/>
+	<enemy name="patrol_1" type="patrol" pos="0.0 2.0 3.0" yaw="0.0" pitch="0.0" roll="0.0" life="4" path="path_1"/>
+	<enemy name="patrol_2" type="patrol" pos="0.0 2.0 3.0" yaw="0.0" pitch="0.0" roll="0.0" life="4" path="path_2"/>
+	<enemy name="patrol_3" type="patrol" pos="0.0 2.0 3.0" yaw="0.0" pitch="0.0" roll="0.0" life="4" path="path_3"/>
+	<enemy name="final_boss" type="boss" pos="0.0 2.0 3.0" yaw="0.0" pitch="0.0" roll="0.0" life="10"/>
+</enemies>
