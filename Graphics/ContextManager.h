@@ -14,10 +14,17 @@ private:
 	ID3D11RenderTargetView*	l_RenderTargetView;
 	ID3D11Texture2D* l_DepthStencil;
 	ID3D11DepthStencilView*	l_DepthStencilView;
+	int WIDTH_APPLICATION;
+	int HEIGHT_APPLICATION;
 
 public:
 	CContextManager(void);
 	~CContextManager(void);
+
+	void setWidthScreen(int _width);
+	void setHeightScreen(int _height);
+	int getWidthScreen();
+	int getHeightScreen();
 	
 	ID3D11Device * getDevice() const;
 	ID3D11DeviceContext * getContext() const;

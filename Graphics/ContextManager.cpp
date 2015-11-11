@@ -20,6 +20,22 @@ CContextManager::~CContextManager(void)
 	l_DepthStencilView->Release();
 }
 
+void CContextManager::setWidthScreen(int _width){
+	WIDTH_APPLICATION = _width;
+}
+
+void CContextManager::setHeightScreen(int _height){
+	HEIGHT_APPLICATION = _height;
+}
+
+int CContextManager::getWidthScreen(){
+	return WIDTH_APPLICATION;
+}
+
+int CContextManager::getHeightScreen(){
+	return HEIGHT_APPLICATION;
+}
+
 ID3D11Device * CContextManager::getDevice() const{
 	return l_D3DDevice;
 }
@@ -122,8 +138,8 @@ void CContextManager::Render(){
 
 	// definir el viewport:
 	D3D11_VIEWPORT vp[1];
-    vp[0].Width = 800;
-    vp[0].Height = 600;
+    vp[0].Width = WIDTH_APPLICATION;
+    vp[0].Height = HEIGHT_APPLICATION;
     vp[0].MinDepth = 0;
     vp[0].MaxDepth = 1;
     vp[0].TopLeftX = 0;

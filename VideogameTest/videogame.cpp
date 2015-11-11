@@ -57,16 +57,15 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 		};
   AdjustWindowRect( &rc, WS_OVERLAPPEDWINDOW, FALSE);
 
-  int WIDTH_APPLICATION = rc.right - rc.left;
-  int HEIGHT_APPLICATION = rc.bottom - rc.top;
+  m_ContextManager = new CContextManager();
+  m_ContextManager->setWidthScreen(rc.right - rc.left);
+  m_ContextManager->setHeightScreen(rc.bottom - rc.top);
   
   // Create the application's window
-  HWND hWnd = CreateWindow( APPLICATION_NAME, APPLICATION_NAME, WS_OVERLAPPEDWINDOW, rc.left, rc.top, WIDTH_APPLICATION, HEIGHT_APPLICATION, NULL, NULL, wc.hInstance, NULL);
+  HWND hWnd = CreateWindow( APPLICATION_NAME, APPLICATION_NAME, WS_OVERLAPPEDWINDOW, rc.left, rc.top, m_ContextManager->getWidthScreen(), m_ContextManager->getHeightScreen(), NULL, NULL, wc.hInstance, NULL);  
   
-  m_ContextManager = new CContextManager();
-
   // TODO Crear el contexto DIRECTX
-  m_ContextManager->CreateContext( hWnd, WIDTH_APPLICATION, HEIGHT_APPLICATION);
+  m_ContextManager->CreateContext( hWnd, m_ContextManager->getWidthScreen(), m_ContextManager->getHeightScreen());
 
   ShowWindow( hWnd, SW_SHOWDEFAULT );
   
