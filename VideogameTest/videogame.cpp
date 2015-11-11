@@ -2,12 +2,19 @@
 #include <d3d11.h>
 //#include <d3dx11.h>
 #include "ContextManager.h"
+#include "Application.h"
+#include "DebugRender.h"
 
 #define APPLICATION_NAME	"VIDEOGAME_TEST"
 
 #pragma comment(lib,"d3d11.lib")
+#pragma comment(lib,"winmm.lib")
 
 CContextManager *m_ContextManager;
+CApplication *m_Application;
+
+float m_ElapsedTime = 0.f;
+DWORD m_PreviousTime = 0.f;
 
 //-----------------------------------------------------------------------------
 // Name: MsgProc()
@@ -57,19 +64,23 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 		};
   AdjustWindowRect( &rc, WS_OVERLAPPEDWINDOW, FALSE);
 
-  m_ContextManager = new CContextManager();
-  m_ContextManager->setWidthScreen(rc.right - rc.left);
-  m_ContextManager->setHeightScreen(rc.bottom - rc.top);
+  int WIDTH_APPLICATION = rc.right - rc.left;
+  int HEIGHT_APPLICATION = rc.bottom - rc.top;
   
   // Create the application's window
-  HWND hWnd = CreateWindow( APPLICATION_NAME, APPLICATION_NAME, WS_OVERLAPPEDWINDOW, rc.left, rc.top, m_ContextManager->getWidthScreen(), m_ContextManager->getHeightScreen(), NULL, NULL, wc.hInstance, NULL);  
+  HWND hWnd = CreateWindow( APPLICATION_NAME, APPLICATION_NAME, WS_OVERLAPPEDWINDOW, rc.left, rc.top, WIDTH_APPLICATION, HEIGHT_APPLICATION, NULL, NULL, wc.hInstance, NULL);
   
-  // TODO Crear el contexto DIRECTX
-  m_ContextManager->CreateContext( hWnd, m_ContextManager->getWidthScreen(), m_ContextManager->getHeightScreen());
+  m_ContextManager = new CContextManager();
+
+  m_ContextManager->CreateContext( hWnd, WIDTH_APPLICATION, HEIGHT_APPLICATION);
 
   ShowWindow( hWnd, SW_SHOWDEFAULT );
   
-  m_ContextManager->BackBuffer();
+  m_ContextManager->CreateBackBuffer(hWnd,WIDTH_APPLICATION,HEIGHT_APPLICATION);
+  m_ContextManager->InitStates();
+  CDebugRender debugRender(m_ContextManager->GetDevice());
+
+  m_Application = new CApplication(&debugRender,m_ContextManager);
 
   UpdateWindow( hWnd );
   MSG msg;
@@ -87,7 +98,12 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
     else
     {
        // Main loop: Añadir aquí el Update y Render de la aplicación principal
-		m_ContextManager->Render();
+		DWORD l_CurrentTime = timeGetTime();
+		m_ElapsedTime = (float)(l_CurrentTime - m_PreviousTime)*0.001f;
+		m_PreviousTime = l_CurrentTime;
+
+		m_Application->Update(m_ElapsedTime);
+		m_Application->Render();
     }
   }
   UnregisterClass( APPLICATION_NAME, wc.hInstance );

@@ -8,5 +8,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="videogame.cpp" />
+    <ClCompile Include="Application.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h" />
   </ItemGroup>
 </Project>
