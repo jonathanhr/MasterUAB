@@ -2,5 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dummy.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InputManagerImplementation.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="InputManagerImplementation.h" />
   </ItemGroup>
 </Project>

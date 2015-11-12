@@ -34,7 +34,7 @@ void CApplication::Render()
 
 	CCamera camera;
 	camera.SetFOV(1.047f);
-	camera.SetAspectRatio(8.0f / 6.0f);
+	camera.SetAspectRatio(m_ContextManager->GetAspectRatio());
 	camera.SetZNear(0.1f);
 	camera.SetZFar(50.f);
 

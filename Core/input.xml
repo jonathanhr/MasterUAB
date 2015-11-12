@@ -1,0 +1,6 @@
+<input>
+	<action name="MOVE_UP" type="KEYBOARD" mode="WHILE_PRESSED" key="W" />
+	<!--
+		Añadir el resto de acciones
+	-->
+</input>

@@ -12,6 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dummy.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InputManagerImplementation.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="InputManagerImplementation.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{77B0C728-54BB-429B-925A-3F8CB72784F9}</ProjectGuid>
@@ -56,6 +62,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

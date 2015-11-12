@@ -10,8 +10,7 @@
 #pragma comment(lib,"d3d11.lib")
 #pragma comment(lib,"winmm.lib")
 
-CContextManager *m_ContextManager;
-CApplication *m_Application;
+CContextManager m_ContextManager;
 
 float m_ElapsedTime = 0.f;
 DWORD m_PreviousTime = 0.f;
@@ -23,29 +22,35 @@ DWORD m_PreviousTime = 0.f;
 LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
 
-  switch( msg )
-  {
-  case WM_DESTROY:
-    {
-      PostQuitMessage( 0 );
-      return 0;
-    }
-    break;
-  case WM_KEYDOWN:
-    {
-      switch( wParam )
-      {
-      case VK_ESCAPE:
-        //Cleanup();
-        PostQuitMessage( 0 );
-        return 0;
-        break;
-      }
-    }
-    break;
-  }//end switch( msg )
+	switch( msg )
+	{
+		case WM_DESTROY:
+		{
+			PostQuitMessage( 0 );
+			return 0;
+		}
+		break;
+		case WM_KEYDOWN:
+		{
+			switch( wParam )
+			{
+				case VK_ESCAPE:
+					//Cleanup();
+				PostQuitMessage( 0 );
+				return 0;
+				break;
+			}
+		}
+		break;
+		case WM_SIZE:
+			if (wParam != SIZE_MINIMIZED)
+			{
+				m_ContextManager.Resize(hWnd, (UINT)LOWORD(lParam), (UINT)HIWORD(lParam));
+			}
+			return 0;
+	}//end switch( msg )
 
-  return DefWindowProc( hWnd, msg, wParam, lParam );
+	return DefWindowProc( hWnd, msg, wParam, lParam );
 }
 
 //-----------------------------------------------------------------------
@@ -64,23 +69,23 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 		};
   AdjustWindowRect( &rc, WS_OVERLAPPEDWINDOW, FALSE);
 
-  int WIDTH_APPLICATION = rc.right - rc.left;
-  int HEIGHT_APPLICATION = rc.bottom - rc.top;
+  //int WIDTH_APPLICATION = rc.right - rc.left;
+  //int HEIGHT_APPLICATION = rc.bottom - rc.top;
+  int WIDTH_APPLICATION = 800;
+  int HEIGHT_APPLICATION = 600;
   
   // Create the application's window
   HWND hWnd = CreateWindow( APPLICATION_NAME, APPLICATION_NAME, WS_OVERLAPPEDWINDOW, rc.left, rc.top, WIDTH_APPLICATION, HEIGHT_APPLICATION, NULL, NULL, wc.hInstance, NULL);
   
-  m_ContextManager = new CContextManager();
-
-  m_ContextManager->CreateContext( hWnd, WIDTH_APPLICATION, HEIGHT_APPLICATION);
+  m_ContextManager.CreateContext( hWnd, WIDTH_APPLICATION, HEIGHT_APPLICATION);
 
   ShowWindow( hWnd, SW_SHOWDEFAULT );
   
-  m_ContextManager->CreateBackBuffer(hWnd,WIDTH_APPLICATION,HEIGHT_APPLICATION);
-  m_ContextManager->InitStates();
-  CDebugRender debugRender(m_ContextManager->GetDevice());
+  m_ContextManager.CreateBackBuffer(hWnd,WIDTH_APPLICATION,HEIGHT_APPLICATION);
+  m_ContextManager.InitStates();
+  CDebugRender debugRender(m_ContextManager.GetDevice());
 
-  m_Application = new CApplication(&debugRender,m_ContextManager);
+  CApplication m_Application(&debugRender,&m_ContextManager);
 
   UpdateWindow( hWnd );
   MSG msg;
@@ -102,8 +107,8 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 		m_ElapsedTime = (float)(l_CurrentTime - m_PreviousTime)*0.001f;
 		m_PreviousTime = l_CurrentTime;
 
-		m_Application->Update(m_ElapsedTime);
-		m_Application->Render();
+		m_Application.Update(m_ElapsedTime);
+		m_Application.Render();
     }
   }
   UnregisterClass( APPLICATION_NAME, wc.hInstance );

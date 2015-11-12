@@ -28,11 +28,12 @@ public:
 	HRESULT CreateContext(HWND hWnd, int Width, int Height);
 	HRESULT CreateBackBuffer(HWND hWnd, int Width, int Height);
 	void InitStates();
-
-
+	
 	void BeginRender();
 	void EndRender();
 	void Draw(CRenderableVertexs* _VerticesToRender, ERasterizedState _RS);
+	void Resize(HWND hWnd, unsigned int Width, unsigned int Height);
+	float GetAspectRatio() const{ return (float)m_Width/(float)m_Height;};
 
 	ID3D11Device* GetDevice() const { return m_D3DDevice; }
 	ID3D11DeviceContext* GetDeviceContext() const { return m_DeviceContext; }
@@ -46,8 +47,6 @@ public:
 private:
 
 	void InitRasterizedStates();
-	void RasterizerWireframe();
-	void RasterizerSolid();
 
 	ID3D11Device*			m_D3DDevice;
 	ID3D11DeviceContext*	m_DeviceContext;
@@ -55,6 +54,8 @@ private:
 	ID3D11RenderTargetView*	m_RenderTargetView;
 	ID3D11Texture2D*		m_DepthStencil;
 	ID3D11DepthStencilView*	m_DepthStencilView;
+
+	int m_Width, m_Height;
 
 	CEffectParameters m_Parameters;
 

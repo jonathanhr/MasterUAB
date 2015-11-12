@@ -32,8 +32,6 @@ CContextManager::~CContextManager()
 	CHECKED_RELEASE(m_DepthStencilView);
 }
 
-
-
 HRESULT CContextManager::CreateContext(HWND hWnd, int Width, int Height)
 {
 
@@ -70,6 +68,13 @@ HRESULT CContextManager::CreateContext(HWND hWnd, int Width, int Height)
 
 HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 {
+	CHECKED_RELEASE(m_RenderTargetView);
+	CHECKED_RELEASE(m_DepthStencil);
+	CHECKED_RELEASE(m_DepthStencilView);
+
+	m_Width = Width;
+	m_Height = Height;
+
 	ID3D11Texture2D *pBackBuffer;
 	if (FAILED(m_SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer)))
 		return FALSE;
@@ -77,7 +82,6 @@ HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 	pBackBuffer->Release();
 	if (FAILED(hr))
 		return FALSE;
-
 
 	D3D11_TEXTURE2D_DESC descDepth;
 	ZeroMemory(&descDepth, sizeof(descDepth));
@@ -104,45 +108,9 @@ HRESULT CContextManager::CreateBackBuffer(HWND hWnd, int Width, int Height)
 	hr = m_D3DDevice->CreateDepthStencilView(m_DepthStencil, &descDSV, &m_DepthStencilView);
 	if (FAILED(hr))
 		return hr;
-
-	m_DeviceContext->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
-
-	D3D11_VIEWPORT vp;
-	vp.Width = (FLOAT)Width;
-	vp.Height = (FLOAT)Height;
-	vp.MinDepth = 0.0f;
-	vp.MaxDepth = 1.0f;
-	vp.TopLeftX = 0;
-	vp.TopLeftY = 0;
-	m_DeviceContext->RSSetViewports(1, &vp);
-
-
-	// Setup imgui rasterizer
-	{
-		D3D11_RASTERIZER_DESC RSDesc;
-		memset(&RSDesc, 0, sizeof(D3D11_RASTERIZER_DESC));
-		RSDesc.FillMode = D3D11_FILL_SOLID;
-		RSDesc.CullMode = D3D11_CULL_NONE;
-		RSDesc.FrontCounterClockwise = FALSE;
-		RSDesc.DepthBias = 0;
-		RSDesc.SlopeScaledDepthBias = 0.0f;
-		RSDesc.DepthBiasClamp = 0;
-		RSDesc.DepthClipEnable = TRUE;
-		RSDesc.ScissorEnable = TRUE;
-		RSDesc.AntialiasedLineEnable = FALSE;
-		RSDesc.MultisampleEnable = FALSE;
-
-		ID3D11RasterizerState* pRState = NULL;
-		m_D3DDevice->CreateRasterizerState(&RSDesc, &pRState);
-		m_DeviceContext->RSSetState(pRState);
-		pRState->Release();
-	}
-
-	// other managers
-
+	
 	return S_OK;
 }
-
 
 
 class CDebugCEffect : public CEffect
@@ -259,30 +227,27 @@ void CContextManager::InitStates()
 
 void CContextManager::InitRasterizedStates()
 {
-	RasterizerWireframe();
-	RasterizerSolid();
-}
+	{
+		D3D11_RASTERIZER_DESC l_WireframeDesc;
+		ZeroMemory(&l_WireframeDesc, sizeof(D3D11_RASTERIZER_DESC));
+		l_WireframeDesc.FillMode = D3D11_FILL_WIREFRAME;
+		l_WireframeDesc.CullMode = D3D11_CULL_NONE;
+		l_WireframeDesc.FrontCounterClockwise = true;
 
-void CContextManager::RasterizerWireframe(){
-	D3D11_RASTERIZER_DESC l_WireframeDesc;
-	ZeroMemory(&l_WireframeDesc, sizeof(D3D11_RASTERIZER_DESC));
-	l_WireframeDesc.FillMode = D3D11_FILL_WIREFRAME;
-	l_WireframeDesc.CullMode = D3D11_CULL_NONE;
-	l_WireframeDesc.FrontCounterClockwise = true;
+		HRESULT l_HR = m_D3DDevice->CreateRasterizerState(&l_WireframeDesc, &m_RS[RS_WIREFRAME]);
+		assert(l_HR == S_OK);
+	}
+	
+	{
+		D3D11_RASTERIZER_DESC l_SolidDesc;
+		ZeroMemory(&l_SolidDesc, sizeof(D3D11_RASTERIZER_DESC));
+		l_SolidDesc.FillMode = D3D11_FILL_SOLID;
+		l_SolidDesc.CullMode = D3D11_CULL_NONE;
+		l_SolidDesc.FrontCounterClockwise = true;
 
-	HRESULT l_HR = m_D3DDevice->CreateRasterizerState(&l_WireframeDesc, &m_RS[RS_WIREFRAME]);
-	assert(l_HR == S_OK);
-}
-
-void CContextManager::RasterizerSolid(){
-	D3D11_RASTERIZER_DESC l_SolidDesc;
-	ZeroMemory(&l_SolidDesc, sizeof(D3D11_RASTERIZER_DESC));
-	l_SolidDesc.FillMode = D3D11_FILL_SOLID;
-	l_SolidDesc.CullMode = D3D11_CULL_NONE;
-	l_SolidDesc.FrontCounterClockwise = true;
-
-	HRESULT l_HR = m_D3DDevice->CreateRasterizerState(&l_SolidDesc, &m_RS[RS_WIREFRAME]);
-	assert(l_HR == S_OK);
+		HRESULT l_HR = m_D3DDevice->CreateRasterizerState(&l_SolidDesc, &m_RS[RS_WIREFRAME]);
+		assert(l_HR == S_OK);
+	}
 }
 
 extern LRESULT ImGui_ImplDX11_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -330,6 +295,17 @@ void CContextManager::Draw(CRenderableVertexs* _VerticesToRender, ERasterizedSta
 
 void CContextManager::BeginRender()
 {
+	m_DeviceContext->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
+
+	D3D11_VIEWPORT vp;
+	vp.Width = (FLOAT)m_Width;
+	vp.Height = (FLOAT)m_Height;
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+	vp.TopLeftX = 0;
+	vp.TopLeftY = 0;
+	m_DeviceContext->RSSetViewports(1, &vp);
+
 	CColor backgroundColor (.2f, .1f, .4f);
 	//backgroundColor.SetUint32Argb(&backgroundColor[0]);
 
@@ -341,4 +317,18 @@ void CContextManager::BeginRender()
 void CContextManager::EndRender()
 {
 	m_SwapChain->Present(0, 0);
+}
+
+void CContextManager::Resize(HWND hWnd, unsigned int Width, unsigned int Height)
+{
+	if (m_D3DDevice != nullptr)
+	{
+		CHECKED_RELEASE(m_RenderTargetView);
+		CHECKED_RELEASE(m_DepthStencil);
+		CHECKED_RELEASE(m_DepthStencilView);
+		
+		m_SwapChain->ResizeBuffers(0, Width, Height, DXGI_FORMAT_UNKNOWN, 0);
+		HRESULT hr = CreateBackBuffer(hWnd, Width, Height);
+		assert(hr == S_OK);
+	}
 }
