@@ -4,9 +4,13 @@
     <ClCompile Include="dummy.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="InputManagerImplementation.cpp" />
+    <ClCompile Include="DebugHelper.cpp" />
+    <ClCompile Include="DebugHelperImplementation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="InputManagerImplementation.h" />
+    <ClInclude Include="DebugHelper.h" />
+    <ClInclude Include="DebugHelperImplementation.h" />
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
     <ClCompile Include="DebugRender.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="SphericalCameraController.cpp" />
+    <ClCompile Include="FPSCameraController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContextManager.h" />
@@ -18,5 +19,6 @@
     <ClInclude Include="RenderableVertexs.h" />
     <ClInclude Include="SphericalCameraController.h" />
     <ClInclude Include="VertexTypes.h" />
+    <ClInclude Include="FPSCameraController.h" />
   </ItemGroup>
 </Project>

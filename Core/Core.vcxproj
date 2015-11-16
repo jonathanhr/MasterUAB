@@ -11,11 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DebugHelper.cpp" />
+    <ClCompile Include="DebugHelperImplementation.cpp" />
     <ClCompile Include="dummy.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="InputManagerImplementation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DebugHelper.h" />
+    <ClInclude Include="DebugHelperImplementation.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="InputManagerImplementation.h" />
   </ItemGroup>
@@ -62,7 +66,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\libxml2-2.7.2.win32\include;$(SolutionDir)\3rdParty\iconv-1.9.2.win32\include;$(SolutionDir)Base;$(SolutionDir)AntTweakBar\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
