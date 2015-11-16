@@ -5,10 +5,13 @@
 
 #include "ContextManager.h"
 #include "DebugRender.h"
+#include "InputManager.h"
+#include "SphericalCameraController.h"
 
-CApplication::CApplication(CDebugRender *_DebugRender, CContextManager *_ContextManager)
+CApplication::CApplication(CDebugRender *_DebugRender, CContextManager *_ContextManager, CSphericalCameraController *_CameraController)
 	: m_DebugRender(_DebugRender)
 	, m_ContextManager(_ContextManager)
+	, m_CameraController(_CameraController)
 	, m_WorldRotation(0)
 {
 }
@@ -25,6 +28,29 @@ void CApplication::Update(float _ElapsedTime)
 	while (m_WorldRotation > FLOAT_PI_VALUE * 2)
 	{
 		m_WorldRotation -= FLOAT_PI_VALUE * 2;
+	}
+
+	{
+		Vect3f cameraMovement(0, 0, 0);
+
+		if (CInputManager::GetInputManager()->IsActionActive("MOVE_LEFT"))
+		{
+			cameraMovement.x += 0.01f * _ElapsedTime;
+		}
+		if (CInputManager::GetInputManager()->IsActionActive("MOVE_RIGHT"))
+		{
+			cameraMovement.x -= 0.01f * _ElapsedTime;
+		}
+		if (CInputManager::GetInputManager()->IsActionActive("MOVE_UP"))
+		{
+			cameraMovement.y += 0.01f * _ElapsedTime;
+		}
+		if (CInputManager::GetInputManager()->IsActionActive("MOVE_DOWN"))
+		{
+			cameraMovement.y -= 0.01f * _ElapsedTime;
+		}
+
+		m_CameraController->Update(_ElapsedTime,cameraMovement);
 	}
 }
 
@@ -57,6 +83,7 @@ void CApplication::Render()
 	projection.SetIdentity();
 	projection.SetFromPerspective(1.047f, 8.0f / 6.0f, 0.1f, 50.0f);
 	*/
+	m_CameraController->SetCamera(&camera);
 
 	m_ContextManager->SetWorldMatrix(world);
 	m_ContextManager->SetCamera(camera);

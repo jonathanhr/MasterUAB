@@ -4,6 +4,8 @@
 #include "ContextManager.h"
 #include "Application.h"
 #include "DebugRender.h"
+#include "InputManagerImplementation.h"
+#include "SphericalCameraController.h"
 
 #define APPLICATION_NAME	"VIDEOGAME_TEST"
 
@@ -13,7 +15,7 @@
 CContextManager m_ContextManager;
 
 float m_ElapsedTime = 0.f;
-DWORD m_PreviousTime = 0.f;
+float m_PreviousTime = 0.f;
 
 //-----------------------------------------------------------------------------
 // Name: MsgProc()
@@ -84,8 +86,13 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
   m_ContextManager.CreateBackBuffer(hWnd,WIDTH_APPLICATION,HEIGHT_APPLICATION);
   m_ContextManager.InitStates();
   CDebugRender debugRender(m_ContextManager.GetDevice());
+  CSphericalCameraController m_CameraController;
 
-  CApplication m_Application(&debugRender,&m_ContextManager);
+  CApplication m_Application(&debugRender, &m_ContextManager, &m_CameraController);
+
+  CInputManagerImplementation inputManager;
+  CInputManager::SetCurrentInputManager(&inputManager);
+  inputManager.LoadCommandsFromFile("Data\\input.xml");
 
   UpdateWindow( hWnd );
   MSG msg;
@@ -94,15 +101,32 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
   // Añadir en el while la condición de salida del programa de la aplicación
 
   while( msg.message != WM_QUIT )
-  {
-    if( PeekMessage( &msg, NULL, 0U, 0U, PM_REMOVE ) )
-    {
-      TranslateMessage( &msg );
-      DispatchMessage( &msg );
-    }
-    else
-    {
-       // Main loop: Añadir aquí el Update y Render de la aplicación principal
+  {	  
+	  if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+	  {
+		switch (msg.message)
+		{
+		case WM_SYSKEYDOWN:
+		case WM_SYSKEYUP:
+		case WM_KEYDOWN:
+		case WM_KEYUP:
+			if (!inputManager.KeyEventReceived(msg.wParam, msg.lParam))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+			break;
+		default:
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+	}
+	else
+		{
+		inputManager.BeginFrame();
+		inputManager.EndFrame();
+		// Main loop: Añadir aquí el Update y Render de la aplicación principal
 		DWORD l_CurrentTime = timeGetTime();
 		m_ElapsedTime = (float)(l_CurrentTime - m_PreviousTime)*0.001f;
 		m_PreviousTime = l_CurrentTime;

@@ -17,8 +17,6 @@ public:
 	bool KeyEventReceived(unsigned int wParam, unsigned int lParam);
 
 private:
-
-
 	struct Action
 	{
 		std::string name;

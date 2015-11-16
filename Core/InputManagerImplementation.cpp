@@ -45,8 +45,8 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 
 		m_Actions.push_back(action);
 	}
-	/*/
-	CXMLTreeNode l_XML;
+	//*/
+	/*CXMLTreeNode l_XML;
 	if (l_XML.LoadFile(path.c_str()))
 	{
 		CXMLTreeNode l_Input = l_XML["input"];
@@ -75,9 +75,7 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 			}
 		}
 	}
-	//*/
-
-
+	*/
 
 	EndFrame();
 }
@@ -154,12 +152,8 @@ void CInputManagerImplementation::BeginFrame()
 				break;
 
 			case Action::ON_RELEASE:
-				// TODO 2.3: añadir acciones de release
-				break;
 			case Action::WHILE_RELEASED:
-				// TODO 2.3: añadir acciones de botón no pulsado
 				break;
-
 			default:
 				break;
 			}
