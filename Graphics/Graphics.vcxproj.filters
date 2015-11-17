@@ -8,6 +8,9 @@
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="SphericalCameraController.cpp" />
     <ClCompile Include="FPSCameraController.cpp" />
+    <ClCompile Include="RenderManager.cpp" />
+    <ClCompile Include="MaterialManager.cpp" />
+    <ClCompile Include="RenderableObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContextManager.h" />
@@ -20,5 +23,9 @@
     <ClInclude Include="SphericalCameraController.h" />
     <ClInclude Include="VertexTypes.h" />
     <ClInclude Include="FPSCameraController.h" />
+    <ClInclude Include="MaterialManager.h" />
+    <ClInclude Include="RenderableObject.h" />
+    <ClInclude Include="RenderManager.h" />
+    <ClInclude Include="Material.h" />
   </ItemGroup>
 </Project>

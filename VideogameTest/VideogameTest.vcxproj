@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\input.xml" />
+    <None Include="Data\materials.xml" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0F3F94EF-527F-4EE2-8F96-23203D8D7ACB}</ProjectGuid>

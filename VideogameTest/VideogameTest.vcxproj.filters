@@ -20,5 +20,8 @@
     <None Include="Data\input.xml">
       <Filter>Data</Filter>
     </None>
+    <None Include="Data\materials.xml">
+      <Filter>Data</Filter>
+    </None>
   </ItemGroup>
 </Project>

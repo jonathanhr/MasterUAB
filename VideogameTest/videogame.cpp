@@ -70,10 +70,10 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_SIZE:
 		if (wParam != SIZE_MINIMIZED)
 		{
-			// Resetear el AntTeakBar
+			// Resetear el AntTweakBar
 			TwWindowSize(0, 0);
 			s_Context.Resize(hWnd, (UINT)LOWORD(lParam), (UINT)HIWORD(lParam));
-			// Resetear el AntTeakBar
+			// Resetear el AntTweakBar
 			TwWindowSize((UINT)LOWORD(lParam), (UINT)HIWORD(lParam));
 		}
 		return 0;
@@ -128,6 +128,7 @@ int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCm
 		CDebugHelper::SetCurrentDebugHelper(&debugHelper);
 
 		CApplication application(&debugRender, &s_Context);
+		application.Init();
 
 		UpdateWindow(hWnd);
 		MSG msg;

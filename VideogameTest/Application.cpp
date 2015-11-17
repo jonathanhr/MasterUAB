@@ -38,7 +38,7 @@ CApplication::CApplication(CDebugRender *_DebugRender, CContextManager *_Context
 		var.name = "cube";
 		var.type = CDebugHelper::POSITION_ORIENTATION;
 		var.mode = CDebugHelper::READ_WRITE;
-		var.pPositionOrientation = &m_CubeTransform;
+		var.pPositionOrientation = m_Cube.GetPtrTransform();
 
 		bar.variables.push_back(var);
 	}
@@ -74,27 +74,47 @@ void CApplication::SwitchCamera()
 
 void CApplication::Update(float _ElapsedTime)
 {	
+	{
+		CCamera camera;
+		m_FPSCamera.SetCamera(&camera);
+		camera.SetFOV(1.047f);
+		camera.SetAspectRatio(m_ContextManager->GetAspectRatio());
+		camera.SetZNear(0.1f);
+		camera.SetZFar(100.f);
+		camera.SetMatrixs();
+		m_RenderManager.SetCurrentCamera(camera);
+
+		m_SphericalCamera.SetCamera(&camera);
+		camera.SetFOV(1.047f);
+		camera.SetAspectRatio(m_ContextManager->GetAspectRatio());
+		camera.SetZNear(0.1f);
+		camera.SetZFar(100.f);
+		camera.SetMatrixs();
+		m_RenderManager.SetDebugCamera(camera);
+
+		m_RenderManager.SetUseDebugCamera(m_CurrentCamera == 0);
+	}
 
 	switch (m_CurrentCamera)
 	{
-	case 0:
-		if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
-		{
-			Vect3f cameraMovement(0, 0, 0);
+		case 0:
+			if (CInputManager::GetInputManager()->IsActionActive("MOVE_CAMERA"))
+			{
+				Vect3f cameraMovement(0, 0, 0);
 
-			cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.5f;
-			cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * 0.5f;
+				cameraMovement.x += CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.5f;
+				cameraMovement.y += CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * 0.5f;
 
-			m_SphericalCamera.Update(cameraMovement);
-		}
+				m_SphericalCamera.Update(cameraMovement);
+			}
 		break;
-	case 1:
-	{
-		m_FPSCamera.AddYaw(-CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.05f);
-		m_FPSCamera.AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * -0.05f);
+		case 1:
+			{
+				m_FPSCamera.AddYaw(-CInputManager::GetInputManager()->GetAxis("X_AXIS") * _ElapsedTime * 0.05f);
+				m_FPSCamera.AddPitch(CInputManager::GetInputManager()->GetAxis("Y_AXIS") * _ElapsedTime * -0.05f);
 
-		m_FPSCamera.Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, _ElapsedTime);
-	}
+				m_FPSCamera.Move(CInputManager::GetInputManager()->GetAxis("STRAFE"), CInputManager::GetInputManager()->GetAxis("MOVE_FWD"), false, _ElapsedTime);
+			}
 		break;
 	}
 }
@@ -103,38 +123,12 @@ void CApplication::Render()
 {
 	m_ContextManager->BeginRender(m_BackgroundColor);
 
-	CCamera camera;
-	camera.SetFOV(1.047f);
-	camera.SetAspectRatio(m_ContextManager->GetAspectRatio());
-	camera.SetZNear(0.1f);
-	camera.SetZFar(100.f);
+	// añadir todos los objetos que se quiere pintar
+	m_RenderManager.AddRenderableObjectToRenderList(&m_Cube);
 
-	switch (m_CurrentCamera)
-	{
-	case 0:
-		m_SphericalCamera.SetCamera(&camera);
-		break;
-	case 1:
-		m_FPSCamera.SetCamera(&camera);
-		break;
-	default:
-		m_CurrentCamera = 0;
-		break;
-	}
-
-	camera.SetMatrixs();
+	m_RenderManager.Render(m_ContextManager, &m_MaterialManager);
 
 	Mat44f world;
-
-	world.SetFromPosAndAnglesYXZ(m_CubeTransform.Position, m_CubeTransform.Yaw, m_CubeTransform.Pitch, m_CubeTransform.Roll);
-
-	m_ContextManager->SetWorldMatrix(world);
-	m_ContextManager->SetCamera(camera);
-
-	m_ContextManager->SetDebugSize(5);
-	m_ContextManager->SetBaseColor(CColor(1, 1, 1, 1));
-
-	m_ContextManager->Draw(m_DebugRender->GetSimpleCube());
 
 	world.SetIdentity();
 	m_ContextManager->SetWorldMatrix(world);
@@ -143,15 +137,21 @@ void CApplication::Render()
 	world.SetIdentity();
 	world.SetFromPos(10, 0, 0);
 	m_ContextManager->SetWorldMatrix(world);
-	m_ContextManager->Draw(m_DebugRender->GetClassicBlendTriangle(), CContextManager::RS_BACK_CULL, CContextManager::DSS_DEPTH_TEST, CContextManager::BLEND_CLASSIC);
+	m_ContextManager->Draw(m_DebugRender->GetClassicBlendTriangle(), CContextManager::RS_SOLID, CContextManager::DSS_OFF, CContextManager::BLEND_CLASSIC);
 
 	world.SetIdentity();
 	world.SetFromPos(0, 0, -10);
 	m_ContextManager->SetWorldMatrix(world);
-	m_ContextManager->Draw(m_DebugRender->GetPremultBlendTriangle(), CContextManager::RS_BACK_CULL, CContextManager::DSS_DEPTH_TEST, CContextManager::BLEND_PREMULT);
-
-
+	m_ContextManager->Draw(m_DebugRender->GetPremultBlendTriangle(), CContextManager::RS_SOLID, CContextManager::DSS_OFF, CContextManager::BLEND_PREMULT);
+	
 	CDebugHelper::GetDebugHelper()->Render();
 
 	m_ContextManager->EndRender();
+}
+
+void CApplication::Init()
+{
+	m_MaterialManager.AddMaterials("Data\\materials.xml");
+
+	m_Cube.AddSubmesh(m_DebugRender->GetSimpleCube(), "solid material", m_DebugRender->GetSimpleCubeBSRadi(), m_DebugRender->GetSimpleCubeBBMin(), m_DebugRender->GetSimpleCubeBBMax());
 }
