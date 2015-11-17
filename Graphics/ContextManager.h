@@ -15,7 +15,8 @@ public:
 	{
 		RS_WIREFRAME,
 		RS_SOLID,
-		// TODO crear un modo que haga culling de la cara frontal y otra de la cara trasera
+		RS_FRONT_CULL,
+		RS_BACK_CULL,
 
 		RS_COUNT
 	};
@@ -25,6 +26,7 @@ public:
 		DSS_DEPTH_ON,
 		DSS_OFF,
 		// TODO: Crear un modo que haga el depth test, pero no escriba su posición
+		DSS_DEPTH_TEST,
 
 		DSS_COUNT
 	};

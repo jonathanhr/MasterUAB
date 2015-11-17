@@ -143,12 +143,12 @@ void CApplication::Render()
 	world.SetIdentity();
 	world.SetFromPos(10, 0, 0);
 	m_ContextManager->SetWorldMatrix(world);
-	m_ContextManager->Draw(m_DebugRender->GetClassicBlendTriangle(), CContextManager::RS_SOLID, CContextManager::DSS_OFF, CContextManager::BLEND_CLASSIC);
+	m_ContextManager->Draw(m_DebugRender->GetClassicBlendTriangle(), CContextManager::RS_FRONT_CULL, CContextManager::DSS_OFF, CContextManager::BLEND_CLASSIC);
 
 	world.SetIdentity();
 	world.SetFromPos(0, 0, -10);
 	m_ContextManager->SetWorldMatrix(world);
-	m_ContextManager->Draw(m_DebugRender->GetPremultBlendTriangle(), CContextManager::RS_SOLID, CContextManager::DSS_OFF, CContextManager::BLEND_PREMULT);
+	m_ContextManager->Draw(m_DebugRender->GetPremultBlendTriangle(), CContextManager::RS_FRONT_CULL, CContextManager::DSS_OFF, CContextManager::BLEND_PREMULT);
 
 
 	CDebugHelper::GetDebugHelper()->Render();

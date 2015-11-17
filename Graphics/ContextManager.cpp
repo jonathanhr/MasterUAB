@@ -326,6 +326,28 @@ void CContextManager::InitRasterizerStates()
 		HRESULT l_HR = m_D3DDevice->CreateRasterizerState(&l_WireframeDesc, &m_RasterizerSates[RS_SOLID]);
 		assert(l_HR == S_OK);
 	}
+
+	{
+		D3D11_RASTERIZER_DESC l_WireframeDesc;
+		ZeroMemory(&l_WireframeDesc, sizeof(D3D11_RASTERIZER_DESC));
+		l_WireframeDesc.FillMode = D3D11_FILL_SOLID;
+		l_WireframeDesc.CullMode = D3D11_CULL_FRONT;
+		l_WireframeDesc.FrontCounterClockwise = true;
+
+		HRESULT l_HR = m_D3DDevice->CreateRasterizerState(&l_WireframeDesc, &m_RasterizerSates[RS_FRONT_CULL]);
+		assert(l_HR == S_OK);
+	}
+
+	{
+		D3D11_RASTERIZER_DESC l_WireframeDesc;
+		ZeroMemory(&l_WireframeDesc, sizeof(D3D11_RASTERIZER_DESC));
+		l_WireframeDesc.FillMode = D3D11_FILL_SOLID;
+		l_WireframeDesc.CullMode = D3D11_CULL_BACK;
+		l_WireframeDesc.FrontCounterClockwise = true;
+
+		HRESULT l_HR = m_D3DDevice->CreateRasterizerState(&l_WireframeDesc, &m_RasterizerSates[RS_BACK_CULL]);
+		assert(l_HR == S_OK);
+	}
 }
 
 void CContextManager::InitDepthStencilStates()
@@ -340,7 +362,7 @@ void CContextManager::InitDepthStencilStates()
 		assert(l_HR == S_OK);
 	}
 
-	/*{
+	{
 		D3D11_DEPTH_STENCIL_DESC l_desc = {};
 		l_desc.DepthEnable = false;
 		l_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
@@ -348,7 +370,17 @@ void CContextManager::InitDepthStencilStates()
 
 		HRESULT l_HR = m_D3DDevice->CreateDepthStencilState(&l_desc, &m_DepthStencilStates[DSS_OFF]);
 		assert(l_HR == S_OK);
-	}*/
+	}
+
+	{
+		D3D11_DEPTH_STENCIL_DESC l_desc = {};
+		l_desc.DepthEnable = false;
+		l_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+		l_desc.DepthFunc = D3D11_COMPARISON_ALWAYS;
+
+		HRESULT l_HR = m_D3DDevice->CreateDepthStencilState(&l_desc, &m_DepthStencilStates[DSS_DEPTH_TEST]);
+		assert(l_HR == S_OK);
+	}
 
 }
 
