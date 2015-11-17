@@ -5,6 +5,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{1431c47b-298f-4f17-9a8a-bc385007fdfc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="videogame.cpp" />
@@ -12,5 +15,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\input.xml">
+      <Filter>Data</Filter>
+    </None>
   </ItemGroup>
 </Project>

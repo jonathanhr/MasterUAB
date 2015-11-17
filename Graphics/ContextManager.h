@@ -25,7 +25,7 @@ public:
 	{
 		DSS_DEPTH_ON,
 		DSS_OFF,
-		// TODO: Crear un modo que haga el depth test, pero no escriba su posición
+		// Crear un modo que haga el depth test, pero no escriba su posición
 		DSS_DEPTH_TEST,
 
 		DSS_COUNT

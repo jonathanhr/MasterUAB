@@ -95,7 +95,6 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 {
 	m_Actions.clear();
 
-	//*
 	{
 		Action action = { "STRAFE_LEFT", KEYBOARD, Action::WHILE_PRESSED };
 		action.keyboard.key = 'A';
@@ -191,8 +190,7 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 		m_Axis.push_back(axis);
 	}
 
-	/*/
-	CXMLTreeNode l_XML;
+	/*CXMLTreeNode l_XML;
 	if (l_XML.LoadFile(path.c_str()))
 	{
 		CXMLTreeNode l_Input = l_XML["input"];
@@ -257,8 +255,7 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 
 			}
 		}
-	}
-	//*/
+	}*/
 
 	EndFrame();
 }
