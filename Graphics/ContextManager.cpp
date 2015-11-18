@@ -332,7 +332,7 @@ void CContextManager::InitRasterizerStates()
 		ZeroMemory(&l_WireframeDesc, sizeof(D3D11_RASTERIZER_DESC));
 		l_WireframeDesc.FillMode = D3D11_FILL_SOLID;
 		l_WireframeDesc.CullMode = D3D11_CULL_FRONT;
-		l_WireframeDesc.FrontCounterClockwise = true;
+		l_WireframeDesc.FrontCounterClockwise = false;
 
 		HRESULT l_HR = m_D3DDevice->CreateRasterizerState(&l_WireframeDesc, &m_RasterizerSates[RS_FRONT_CULL]);
 		assert(l_HR == S_OK);
@@ -343,7 +343,7 @@ void CContextManager::InitRasterizerStates()
 		ZeroMemory(&l_WireframeDesc, sizeof(D3D11_RASTERIZER_DESC));
 		l_WireframeDesc.FillMode = D3D11_FILL_SOLID;
 		l_WireframeDesc.CullMode = D3D11_CULL_BACK;
-		l_WireframeDesc.FrontCounterClockwise = true;
+		l_WireframeDesc.FrontCounterClockwise = false;
 
 		HRESULT l_HR = m_D3DDevice->CreateRasterizerState(&l_WireframeDesc, &m_RasterizerSates[RS_BACK_CULL]);
 		assert(l_HR == S_OK);

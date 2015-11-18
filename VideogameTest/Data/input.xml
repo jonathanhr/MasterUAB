@@ -1,6 +1,7 @@
 <input>
-	<action name="STRAFE_LEFT" type="KEYBOARD" mode="WHILE_PRESSED" triggers_axis="" axis="" axis_value="" key="A" needs_alt="false" needs_ctrl="false"/>
-	<action name="STRAFE_RIGHT" type="KEYBOARD" mode="WHILE_PRESSED" triggers_axis="" axis="" axis_value="" key="D" needs_alt="false" needs_ctrl="false"/>
-	<action name="MOVE_FWD" type="KEYBOARD" mode="WHILE_PRESSED" triggers_axis="" axis="" axis_value="" key="W" needs_alt="false" needs_ctrl="false"/>
-	<action name="MOVE_BACK" type="KEYBOARD" mode="WHILE_PRESSED" triggers_axis="" axis="" axis_value="" key="S" needs_alt="false" needs_ctrl="false"/>
+	<action name="STRAFE_LEFT" type="KEYBOARD" mode="WHILE_PRESSED" triggers_axis="true" axis="STRAFE" axis_value="1" key="A" needs_alt="false" needs_ctrl="false"/>
+	<action name="STRAFE_RIGHT" type="KEYBOARD" mode="WHILE_PRESSED" triggers_axis="true" axis="STRAFE" axis_value="1" key="D" needs_alt="false" needs_ctrl="false"/>
+	<action name="MOVE_FWD" type="KEYBOARD" mode="WHILE_PRESSED" triggers_axis="true" axis="MOVE_FWD" axis_value="1" key="W" needs_alt="false" needs_ctrl="false"/>
+	<action name="MOVE_BACK" type="KEYBOARD" mode="WHILE_PRESSED" triggers_axis="true" axis="MOVE_FWD" axis_value="1" key="S" needs_alt="false" needs_ctrl="false"/>
+	<action name="MOVE_CAMERA" type="MOUSE" mode="WHILE_PRESSED" triggers_axis="" axis="" axis_value="" button="Action::RIGHT" needs_alt="false" needs_ctrl="false"/>
 </input>

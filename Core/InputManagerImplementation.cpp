@@ -95,7 +95,7 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 {
 	m_Actions.clear();
 
-	{
+	/*{
 		Action action = { "STRAFE_LEFT", KEYBOARD, Action::WHILE_PRESSED };
 		action.keyboard.key = 'A';
 		action.keyboard.needsAlt = false;
@@ -188,9 +188,9 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 		axis.gamepad.gamepadNumber = 0;
 
 		m_Axis.push_back(axis);
-	}
+	}*/
 
-	/*CXMLTreeNode l_XML;
+	CXMLTreeNode l_XML;
 	if (l_XML.LoadFile(path.c_str()))
 	{
 		CXMLTreeNode l_Input = l_XML["input"];
@@ -216,34 +216,36 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 
 					switch (action.inputType)
 					{
-					case KEYBOARD:
+						case KEYBOARD:
+							action.keyboard.key = l_Action.GetPszProperty("key", "A")[0];
+							action.keyboard.needsAlt = l_Action.GetBoolProperty("needs_alt", false, false);
+							action.keyboard.needsCtrl = l_Action.GetBoolProperty("needs_ctrl", false, false);
+							break;
+						case MOUSE:
+							/*action.mouse.button = l_Action.GetPszProperty("button", "Action::RIGHT")[0];
+							action.keyboard.needsAlt = l_Action.GetBoolProperty("needs_alt", false, false);
+							action.keyboard.needsCtrl = l_Action.GetBoolProperty("needs_ctrl", false, false);
+							break;*/
+						case GAMEPAD:
+							// Pista: para parsear botones del gamepad, usad las constantes:
+							//   podeis tener más de una a la vez usando "XINPUT_GAMEPAD_A | XINPUT_GAMEPAD_B", por ejemplo.
+							//   pero para que eso funcione bién con ON_PRESS tendréis que mejorar la lógica de esta clase o ser frame perfect pulsando botones
 
-						action.keyboard.key = l_Action.GetPszProperty("key", "A")[0];
-						action.keyboard.needsAlt = l_Action.GetBoolProperty("needs_alt", false, false);
-						action.keyboard.needsCtrl = l_Action.GetBoolProperty("needs_ctrl", false, false);
-						break;
-
-						// TODO: Mouse y Gamepad
-
-						// Pista: para parsear botones del gamepad, usad las constantes:
-						//   podeis tener más de una a la vez usando "XINPUT_GAMEPAD_A | XINPUT_GAMEPAD_B", por ejemplo.
-						//   pero para que eso funcione bién con ON_PRESS tendréis que mejorar la lógica de esta clase o ser frame perfect pulsando botones
-
-						//  XINPUT_GAMEPAD_DPAD_UP       
-						//  XINPUT_GAMEPAD_DPAD_DOWN     
-						//  XINPUT_GAMEPAD_DPAD_LEFT     
-						//  XINPUT_GAMEPAD_DPAD_RIGHT    
-						//  XINPUT_GAMEPAD_START         
-						//  XINPUT_GAMEPAD_BACK          
-						//  XINPUT_GAMEPAD_LEFT_THUMB    
-						//  XINPUT_GAMEPAD_RIGHT_THUMB   
-						//  XINPUT_GAMEPAD_LEFT_SHOULDER 
-						//  XINPUT_GAMEPAD_RIGHT_SHOULDER
-						//  XINPUT_GAMEPAD_A             
-						//  XINPUT_GAMEPAD_B             
-						//  XINPUT_GAMEPAD_X             
-						//  XINPUT_GAMEPAD_Y             
-						// 
+							//  XINPUT_GAMEPAD_DPAD_UP       
+							//  XINPUT_GAMEPAD_DPAD_DOWN     
+							//  XINPUT_GAMEPAD_DPAD_LEFT     
+							//  XINPUT_GAMEPAD_DPAD_RIGHT    
+							//  XINPUT_GAMEPAD_START         
+							//  XINPUT_GAMEPAD_BACK          
+							//  XINPUT_GAMEPAD_LEFT_THUMB    
+							//  XINPUT_GAMEPAD_RIGHT_THUMB   
+							//  XINPUT_GAMEPAD_LEFT_SHOULDER 
+							//  XINPUT_GAMEPAD_RIGHT_SHOULDER
+							//  XINPUT_GAMEPAD_A             
+							//  XINPUT_GAMEPAD_B             
+							//  XINPUT_GAMEPAD_X             
+							//  XINPUT_GAMEPAD_Y
+							break;
 					}
 
 					m_Actions.push_back(action);
@@ -251,11 +253,20 @@ void CInputManagerImplementation::LoadCommandsFromFile(const std::string& path)
 				else if (l_Element.GetName() == std::string("axis"))
 				{
 					// TODO: parse axis
+					/*CXMLTreeNode &l_Action = l_Element;
+
+					Action action = {};
+					action.name = l_Action.GetPszProperty("name");
+					std::string type = l_Action.GetPszProperty("type", "MOUSE");
+					action.inputType = ParseInputType(type);
+
+					action.axisName = l_Action.GetPszProperty("axis", "MouseAxis::X");
+					action.mouse. = l_Action.GetPszProperty("key", "A")[0];*/
 				}
 
 			}
 		}
-	}*/
+	}
 
 	EndFrame();
 }
