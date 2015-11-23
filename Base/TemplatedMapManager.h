@@ -5,7 +5,6 @@
 
 template<class T>
 
-
 class CTemplatedMapManager
 {
 	protected:
@@ -13,12 +12,9 @@ class CTemplatedMapManager
 		TMapResource m_Resources;
 
 	public:
-		CMapManager()
-		{
+		CTemplatedMapManager(){}
 
-		}
-
-		virtual ~CMapManager()
+		virtual ~CTemplatedMapManager()
 		{
 			Destroy();
 		}
@@ -43,7 +39,6 @@ class CTemplatedMapManager
 			}
 			return false;
 		}
-
 
 		void Destroy()
 		{

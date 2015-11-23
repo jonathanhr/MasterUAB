@@ -1,14 +1,47 @@
-#include "Named.h"
+#include "Texture.h"
 
-CNamed::CNamed(const CXMLTreeNode &TreeNode) : m_Name(TreeNode.GetPszProperty("name", "")) {
-}
-		
-CNamed::CNamed(const std::string &Name): m_Name(Name){}
-	
-void CNamed::SetName(const std::string &Name){
-	m_Name = Name;
+CTexture::CTexture() : CNamed(nullptr), m_Texture(nullptr), m_SamplerState(nullptr){};
+
+CTexture::~CTexture(){
+	Unload();
 }
 
-const std::string &CNamed::GetName(){
-	return m_Name;
+bool CTexture::Load(const std::string &Filename){
+	m_Name = Filename;
+	return LoadFile();
+}
+
+void CTexture::Activate(unsigned int StageId)
+{
+	/*ID3D11DeviceContext *l_DeviceContext = UABEngine.GetInstance().GetRenderManager().GetDeviceContext();
+	l_DeviceContext->PSSetSamplers(StageId, 1, &m_SamplerState);
+	l_DeviceContext->PSSetShaderResources(StageId, 1, &m_Texture);*/
+}
+
+bool CTexture::Reload(){
+	Unload();
+	return LoadFile();
+}
+
+bool CTexture::LoadFile(){
+	/*ID3D11Device *l_Device = UABEngine.GetRenderManager().GetDevice();
+	HRESULT l_HR = D3DX11CreateShaderResourceViewFromFile(l_Device,
+		m_Name.c_str(), NULL, NULL, &m_Texture, NULL);
+	D3D11_SAMPLER_DESC l_SampDesc;
+	ZeroMemory(&l_SampDesc, sizeof(l_SampDesc));
+	l_SampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	l_SampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	l_SampDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	l_SampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	l_SampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	l_SampDesc.MinLOD = 0;
+	l_SampDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	l_HR = l_Device->CreateSamplerState(&l_SampDesc, &m_SamplerState);
+	return !FAILED(l_HR);*/
+	return false;
+}
+
+void CTexture::Unload(){
+	m_Texture->Release();
+	m_Texture = nullptr;
 }

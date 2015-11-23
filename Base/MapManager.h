@@ -13,10 +13,7 @@ class CMapManager
 		TMapResource m_Resources;
 
 	public:
-		CMapManager()
-		{
-
-		}
+		CMapManager(){}
 
 		virtual ~CMapManager()
 		{
