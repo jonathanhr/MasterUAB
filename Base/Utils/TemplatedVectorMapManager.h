@@ -8,18 +8,18 @@ template<class T>
 class CTemplatedVectorMapManager
 {
 	public:
-		class CMapResouceValue
+		class CMapResourceValue
 		{
 			public:
-				CMapResouceValue(){assert(!"Llama al otro constructor");};
+				CMapResourceValue(){assert(!"Llama al otro constructor");};
 				T *m_Value;
 				size_t m_Id;
-				CMapResouceValue(T *Value, size_t Id): m_Value(Value), m_Id(Id){}
+				CMapResourceValue(T *Value, size_t Id): m_Value(Value), m_Id(Id){}
 		};
 
 
 		typedef std::vector<T *> TVectorResources;
-		typedef std::map<std::string, CMapResouceValue> TMapResources;
+		typedef std::map<std::string, CMapResourceValue> TMapResources;
 
 	protected:
 		TVectorResources m_ResourcesVector;
@@ -73,7 +73,12 @@ class CTemplatedVectorMapManager
 			return nullptr;
 		}
 		
-		virtual bool AddResource(const std::string &Name, T *Resource);
+		virtual bool AddResource(const std::string &Name, T *Resource)
+		{
+			m_ResourcesVector.push_back(Resource);
+			CMapResourceValue aux(Resource, m_ResourcesVector.size());
+			m_ResourcesMap.insert(std::pair<std::string, CMapResourceValue>(Name, aux));
+		}
 		
 		virtual void Destroy(){
 			for (int i = 0; i < m_ResourcesVector.size(); ++i)

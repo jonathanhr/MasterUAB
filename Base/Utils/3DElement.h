@@ -2,6 +2,8 @@
 #include "Math\Vector3.h"
 #include "XML\XMLTreeNode.h"
 
+#include <string>
+
 class C3DElement
 {
 protected:

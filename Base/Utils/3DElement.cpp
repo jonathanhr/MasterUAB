@@ -4,7 +4,15 @@ C3DElement::C3DElement(){}
 C3DElement::C3DElement(const Vect3f &Position) : m_Position(Position){}
 C3DElement::C3DElement(const Vect3f &Position, float Yaw, float Pitch, float Roll) : m_Position(Position), m_Yaw(Yaw), m_Pitch(Pitch), m_Roll(Roll){}
 C3DElement::C3DElement(float Yaw, float Pitch, float Roll) : m_Yaw(Yaw), m_Pitch(Pitch), m_Roll(Roll){}
-C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode){}
+C3DElement::C3DElement(const CXMLTreeNode &XMLTreeNode){
+	// pos, yaw, pitch, roll, scale
+
+	m_Position = XMLTreeNode.GetVect3fProperty("pos",Vect3f(0,0,0),false);
+	m_Yaw = XMLTreeNode.GetFloatProperty("yaw");
+	m_Pitch = XMLTreeNode.GetFloatProperty("pitch");
+	m_Roll = XMLTreeNode.GetFloatProperty("roll");
+	m_Scale = XMLTreeNode.GetVect3fProperty("scale",Vect3f(0,0,0),false);
+}
 
 void C3DElement::SetPosition(const Vect3f &Position){
 	m_PrevPos = m_Position;
