@@ -1,31 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="dummy.cpp" />
     <ClCompile Include="ContextManager.cpp" />
-    <ClCompile Include="CameraController.cpp" />
-    <ClCompile Include="DebugRender.cpp" />
     <ClCompile Include="Frustum.cpp" />
-    <ClCompile Include="SphericalCameraController.cpp" />
-    <ClCompile Include="FPSCameraController.cpp" />
-    <ClCompile Include="RenderManager.cpp" />
-    <ClCompile Include="MaterialManager.cpp" />
-    <ClCompile Include="RenderableObject.cpp" />
+    <ClCompile Include="Texture\Texture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\TextureManager.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Material\MaterialManager.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\CameraController.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\FPSCameraController.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\SphericalCameraController.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\DebugRender.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\RenderableObject.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\RenderManager.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContextManager.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="CameraController.h" />
-    <ClInclude Include="DebugRender.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Frustum.h" />
-    <ClInclude Include="RenderableVertexs.h" />
-    <ClInclude Include="SphericalCameraController.h" />
-    <ClInclude Include="VertexTypes.h" />
-    <ClInclude Include="FPSCameraController.h" />
-    <ClInclude Include="MaterialManager.h" />
-    <ClInclude Include="RenderableObject.h" />
-    <ClInclude Include="RenderManager.h" />
-    <ClInclude Include="Material.h" />
+    <ClInclude Include="Texture\Texture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\TextureManager.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderableVertexs.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\TemplatedRenderableVertexs.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Material\Material.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Material\MaterialManager.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\CameraController.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\FPSCameraController.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\SphericalCameraController.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DebugRender.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderableObject.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderManager.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\VertexTypes.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Render">
+      <UniqueIdentifier>{f489e030-6a75-4850-9c93-5b232855ec1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{e6a21d5f-5f4d-44ae-a24a-4bebf8349085}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Material">
+      <UniqueIdentifier>{e7ae303e-c1c4-4f8c-aa09-4c23d83c08bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{7d149bd2-eca5-4ac5-aabe-8c649b385ac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effects">
+      <UniqueIdentifier>{38064d33-1849-4c62-98e4-943034fc9309}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
