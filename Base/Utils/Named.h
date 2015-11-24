@@ -1,6 +1,3 @@
-#include <string>
-#include <stdlib.h>
-
 #include "XML\XMLTreeNode.h"
 
 class CNamed

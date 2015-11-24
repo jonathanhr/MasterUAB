@@ -1,7 +1,7 @@
 #include "RenderManager.h"
 
 #include "ContextManager.h"
-#include "MaterialManager.h"
+#include "Material\MaterialManager.h"
 
 void CRenderManager::SetCurrentCamera(const CCamera& _CurrentCamera)
 {

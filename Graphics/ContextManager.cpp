@@ -1,12 +1,12 @@
 #include "ContextManager.h"
 
 #include "VertexTypes.h"
-#include "RenderableVertexs.h"
+#include "Render\RenderableVertexs.h"
 #include "Effect.h"
 
 #include "Math\Matrix44.h"
 
-#include "DebugRender.h"
+#include "Render\DebugRender.h"
 
 #pragma comment(lib,"d3d11.lib")
 

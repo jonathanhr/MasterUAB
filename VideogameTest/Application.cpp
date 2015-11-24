@@ -4,7 +4,7 @@
 #include "Math\Vector4.h"
 
 #include "ContextManager.h"
-#include "DebugRender.h"
+#include "Render\DebugRender.h"
 #include "InputManager.h"
 #include "DebugHelper.h"
 

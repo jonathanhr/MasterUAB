@@ -1,4 +1,4 @@
-#include "TemplatedMapManager.h"
+#include "Utils/TemplatedMapManager.h"
 #include "Texture.h"
 
 class CTextureManager : public CTemplatedMapManager<CTexture>

@@ -5,7 +5,7 @@
 #include "HelperTypes.h"
 
 #include "RenderableVertexs.h"
-#include "Material.h"
+#include "Material\Material.h"
 
 
 class CRenderableObject

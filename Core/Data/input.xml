@@ -1,0 +1,6 @@
+<input>
+	<action name="MOVE_UP" type="KEYBOARD" mode="WHILE_PRESSED" key="W" />
+  <action name="MOVE_DOWN" type="KEYBOARD" mode="WHILE_PRESSED" key="S" />
+  <action name="MOVE_LEFT" type="KEYBOARD" mode="WHILE_PRESSED" key="A" />
+  <action name="MOVE_RIGHT" type="KEYBOARD" mode="WHILE_PRESSED" key="F" />
+</input>

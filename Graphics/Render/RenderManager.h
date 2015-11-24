@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Camera.h"
+#include "Camera\Camera.h"
 #include "Frustum.h"
 #include "RenderableObject.h"
 
@@ -25,7 +25,6 @@ public:
 	void Render(CContextManager* _Context, CMaterialManager* _MaterialManager);
 
 private:
-
 	CCamera m_CurrentCamera;
 	CFrustum m_CullFrustum;
 	CCamera m_DebugCamera;
