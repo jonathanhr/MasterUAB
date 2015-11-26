@@ -1,3 +1,8 @@
+#ifndef _RENDERABLE_VERTEX
+#define _RENDERABLE_VERTEX
+
+#pragma once
+
 #include <assert.h>
 #include "Render\RenderManager.h"
 
@@ -18,3 +23,5 @@ class CRenderableVertexs
 			 return false;
 		}
 };
+
+#endif

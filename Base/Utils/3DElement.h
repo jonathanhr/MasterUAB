@@ -1,3 +1,6 @@
+#ifndef _3DELEMENT
+#define _3DELEMENT
+
 #include "Math\Matrix44.h"
 #include "Math\Vector3.h"
 #include "XML\XMLTreeNode.h"
@@ -33,3 +36,5 @@ public:
 	//virtual void Render(CKGRenderManager *RenderManager);
 	const Mat44f & GetTransform();
 };
+
+#endif

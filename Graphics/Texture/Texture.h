@@ -1,3 +1,8 @@
+#ifndef _TEXTURE
+#define _TEXTURE
+
+#pragma once
+
 #include "Utils\Named.h"
 
 #include <d3d11.h>
@@ -17,3 +22,5 @@ public:
 	void Activate(unsigned int StageId);
 	bool Reload();
 };
+
+#endif

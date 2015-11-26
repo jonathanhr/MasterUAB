@@ -1,6 +1,6 @@
 #include "ContextManager.h"
 
-#include "VertexTypes.h"
+#include "Render\VertexTypes.h"
 #include "Render\RenderableVertexs.h"
 #include "Effect.h"
 

@@ -1,3 +1,8 @@
+#ifndef _MATERIAL_MANAGER
+#define _MATERIAL_MANAGER
+
+#pragma once
+
 #include "TemplatedMapManager.h"
 #include "Material.h"
 
@@ -13,3 +18,5 @@ public:
 	void Load(const std::string &Filename);
 	void Reload();
 };
+
+#endif

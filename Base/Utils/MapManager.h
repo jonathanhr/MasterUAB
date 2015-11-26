@@ -1,3 +1,8 @@
+#ifndef _MAP_MANAGER
+#define _MAP_MANAGER
+
+#pragma once
+
 #include <stdlib.h>
 #include <map>
 #include <string>
@@ -52,3 +57,5 @@ class CMapManager
 			m_Resources.clear();
 		}
 };
+
+#endif

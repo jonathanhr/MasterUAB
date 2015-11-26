@@ -1,5 +1,0 @@
-FE55
-numMateriales/NumCharsMaterial/materialName/NumcharsMaterial2/Material2Name
-vertexType/NumVertex/vertex1/vertex2/vertex3
-IndexSize/numIndex/index1/index2/index3/index4
-55FE

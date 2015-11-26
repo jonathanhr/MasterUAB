@@ -1,9 +1,14 @@
+#ifndef _MATERIAL
+#define _MATERIAL
+
+#pragma once
+
 #include "Named.h"
 #include "Texture\Texture.h"
 
 #include <vector>
 
-class CMaterial : public CNamed
+class CMaterial : CNamed
 {
 private:
 	std::vector<CTexture *> m_Textures;
@@ -15,3 +20,5 @@ public:
 	virtual void Apply();
 	//UAB_GET_PROPERTY(CEffectTechnique, EffectTechnique);
 };
+
+#endif
